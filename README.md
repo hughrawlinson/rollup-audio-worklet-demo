@@ -9,3 +9,18 @@ This hack uses a modified [rollup-plugin-web-worker-loader] to encode the bundle
 The demo is shown in index.html, and should work in browsers that support AudioWorklet.
 
 [rollup-plugin-web-worker-loader]: https://www.npmjs.com/package/rollup-plugin-web-worker-loader
+
+### A note on running against an `npm link` copy of rollup-plugin-web-worker-loader
+
+rollup-plugin-web-worker-loader has a peerdependency on rollup. However, npm link doesn't resolve peerdependencies by default.
+
+```sh
+# rather than call rollup as usual
+rollup -c rollup.config.js
+# you need to invoke node with --preserve-symlinks
+node --preserve-symlinks ./node_modules/.bin/rollup -c rollup.config.js
+```
+
+This is only necessary to build with a local version of a package with peerdependencies, and won't be necessary in most AudioWorklet cases.
+
+For more info see [this blog post](https://www.chevtek.io/you-can-finally-npm-link-packages-that-contain-peer-dependencies/).
