@@ -1,5 +1,3 @@
-'use strict';
-
 function funcToSource(fn, sourcemapArg) {
     var sourcemap = sourcemapArg === undefined ? null : sourcemapArg;
     var source = fn.toString();
@@ -45,11 +43,15 @@ function createInlineAudioWorkletFactory(fn, sourcemapArg) {
 }
 
 var WorkerFactory = /*#__PURE__*/createInlineAudioWorkletFactory(/* rollup-plugin-web-worker-loader */function () {
-(function (fs) {
+(function () {
   '__worker_loader_strict__';
 
-  console.log(fs.readFileSync);
+  const a = () => {
+    console.log('haha hi');
+  };
+
   // Example copied from MDN: https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletNode
+  a();
 
   // white-noise-processor.js
   class WhiteNoiseProcessor extends AudioWorkletProcessor {
@@ -66,13 +68,14 @@ var WorkerFactory = /*#__PURE__*/createInlineAudioWorkletFactory(/* rollup-plugi
 
   registerProcessor("white-noise-processor", WhiteNoiseProcessor);
 
-}(fs));
+}());
 }, null);
 /* eslint-enable */
 
+const audioContext = new AudioContext();
+WorkerFactory(audioContext);
+
 async function runAudio(){
-  const audioContext = new AudioContext();
-  await WorkerFactory(audioContext);
   const whiteNoiseNode = new AudioWorkletNode(
     audioContext,
     "white-noise-processor"

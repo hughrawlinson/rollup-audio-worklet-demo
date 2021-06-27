@@ -5,7 +5,7 @@ export default {
   output: {
     file: "site/index.bundled.js",
     name: "RollupAudioWorkletDemo",
-    format: "cjs",
+    format: "es",
   },
-  plugins: [webWorkerLoader()],
+  plugins: [webWorkerLoader({preserveSource: true})],
 };

@@ -1,8 +1,9 @@
 import MyAudioWorklet from "audio-worklet:./worklet.js";
 
+const audioContext = new AudioContext();
+MyAudioWorklet(audioContext);
+
 async function runAudio(){
-  const audioContext = new AudioContext();
-  await MyAudioWorklet(audioContext);
   const whiteNoiseNode = new AudioWorkletNode(
     audioContext,
     "white-noise-processor"
