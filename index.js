@@ -1,4 +1,4 @@
-import MyAudioWorklet from "web-worker:./worklet.js";
+import MyAudioWorklet from "audio-worklet:./worklet.js";
 
 async function runAudio(){
   const audioContext = new AudioContext();

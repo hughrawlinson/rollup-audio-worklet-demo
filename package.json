@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -f site/*.js",
+    "build": "node --preserve-symlinks ./node_modules/.bin/rollup -c rollup.config.js",
+    "start": "python -m http.server -d site"
   },
   "keywords": [],
   "author": "",
