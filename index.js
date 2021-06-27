@@ -1,13 +1,16 @@
-import MyAudioWorklet from "audio-worklet:./worklet.js";
+import addMyWorkletModule from "audio-worklet:./worklet.js";
 
 const audioContext = new AudioContext();
-MyAudioWorklet(audioContext);
+addMyWorkletModule(audioContext);
+
+class MyWorkletNode extends AudioWorkletNode {
+  constructor(audioContext) {
+    super(audioContext, "white-noise-processor")
+  }
+}
 
 async function runAudio(){
-  const whiteNoiseNode = new AudioWorkletNode(
-    audioContext,
-    "white-noise-processor"
-  );
+  const whiteNoiseNode = new MyWorkletNode(audioContext);
   whiteNoiseNode.connect(audioContext.destination);
 }
 

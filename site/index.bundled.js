@@ -46,12 +46,7 @@ var WorkerFactory = /*#__PURE__*/createInlineAudioWorkletFactory(/* rollup-plugi
 (function () {
   '__worker_loader_strict__';
 
-  const a = () => {
-    console.log('haha hi');
-  };
-
   // Example copied from MDN: https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletNode
-  a();
 
   // white-noise-processor.js
   class WhiteNoiseProcessor extends AudioWorkletProcessor {
@@ -75,11 +70,14 @@ var WorkerFactory = /*#__PURE__*/createInlineAudioWorkletFactory(/* rollup-plugi
 const audioContext = new AudioContext();
 WorkerFactory(audioContext);
 
+class MyWorkletNode extends AudioWorkletNode {
+  constructor(audioContext) {
+    super(audioContext, "white-noise-processor");
+  }
+}
+
 async function runAudio(){
-  const whiteNoiseNode = new AudioWorkletNode(
-    audioContext,
-    "white-noise-processor"
-  );
+  const whiteNoiseNode = new MyWorkletNode(audioContext);
   whiteNoiseNode.connect(audioContext.destination);
 }
 
